@@ -6,6 +6,7 @@ import { BadRequestException,
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 
+import { PaginationDto } from 'src/common/dto';
 import { CreatePokemonDto, UpdatePokemonDto } from './dto';
 import { Pokemon } from './entities';
 
@@ -29,10 +30,15 @@ export class PokemonService {
     }
   }
 
-  async findAll() {
-    const pokemons = await this.pokemonModel.find().lean();
+   findAll( paginationDto: PaginationDto ) {
 
-    return pokemons;
+    const { limit = 10 , offset = 0 } = paginationDto;
+
+    return this.pokemonModel.find()
+                            .limit( limit )
+                            .skip( offset )
+                            .sort({ no: 1 })
+                            .select('-__v')    
   }
 
   async findOne(term: string) {
