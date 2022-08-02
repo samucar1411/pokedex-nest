@@ -31,6 +31,17 @@ yarn start:dev
 ```
 http://localhost:3000/api/v2/seed
 ```
+# Production build
+
+### 1. Create .env.prod file 
+
+### 2. Fill enviroment variables defined in __.env.prod__
+
+### 3. Build a new image
+```
+docker-compose -f docker-compose.prod.yaml --env-file .env.prod up --build
+```
+
 
 ## Stack used
 
